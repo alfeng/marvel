@@ -1,0 +1,21 @@
+https://DEVELOPER.MARVEL.COM/
+
+Docs:
+http://gateway.marvel.com/docs
+
+Public Key: 9f2a244b8e7bbc4c6f5acbd30981c591
+Private Key: d4e531853163b095ffa1e1bd32c6818bfc76d59d
+
+How to use Keys:
+https://developer.marvel.com/documentation/authorization
+
+Endpoint: https://gateway.marvel.com/
+https://developer.marvel.com/documentation/generalinfo
+
+
+
+
+
+
+
+
