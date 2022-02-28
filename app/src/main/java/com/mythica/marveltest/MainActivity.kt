@@ -11,10 +11,14 @@ import com.mythica.marveltest.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var marvelApi: Marvel
+
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        marvelApi = Marvel(this)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
