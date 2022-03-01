@@ -2,10 +2,42 @@ package com.mythica.marveltest
 
 import android.content.Context
 
+import javax.security.auth.callback.Callback
+
+import retrofit.http.QueryMap
+
+import com.arnaudpiroelle.marvel.api.MarvelApi
+import com.arnaudpiroelle.marvel.api.objects.Comic
+import com.arnaudpiroelle.marvel.api.objects.ref.DataWrapper
+import com.arnaudpiroelle.marvel.api.params.name.comic.ListComicParamName
+import com.arnaudpiroelle.marvel.api.services.async.ComicsAsyncService
+import retrofit.RetrofitError
+import retrofit.client.Response
+
 class Marvel(val context: Context)
 {
+    var comicsService: ComicsAsyncService
+    private val pubKey = "9f2a244b8e7bbc4c6f5acbd30981c591"
+    private val privKey = "d4e531853163b095ffa1e1bd32c6818bfc76d59d"
+
+    init {
+        // Init API
+        MarvelApi.configure().withApiKeys(pubKey, privKey).init()
+        comicsService = MarvelApi.getService(ComicsAsyncService::class.java)
+    }
+
     fun getComics() {
         // Get list of comics
+        val options = mutableMapOf<ListComicParamName, String>()
+        comicsService.listComic(options, object: retrofit.Callback<DataWrapper<Comic>> {
+            override fun success(t: DataWrapper<Comic>?, response: Response?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun failure(error: RetrofitError?) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
     fun getComicInfo(id: Int) {
