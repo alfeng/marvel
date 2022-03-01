@@ -9,13 +9,13 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.mythica.marveltest.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
-
+class MainActivity : AppCompatActivity()
+{
     private lateinit var marvelApi: Marvel
-
     private lateinit var binding: ActivityMainBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
 
         marvelApi = Marvel(this)
@@ -32,5 +32,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
+        // Test API
+        marvelApi.getComics()
     }
 }

@@ -1,16 +1,14 @@
 package com.mythica.marveltest
 
 import android.content.Context
-
-import javax.security.auth.callback.Callback
-
-import retrofit.http.QueryMap
+import android.util.Log
 
 import com.arnaudpiroelle.marvel.api.MarvelApi
 import com.arnaudpiroelle.marvel.api.objects.Comic
 import com.arnaudpiroelle.marvel.api.objects.ref.DataWrapper
 import com.arnaudpiroelle.marvel.api.params.name.comic.ListComicParamName
 import com.arnaudpiroelle.marvel.api.services.async.ComicsAsyncService
+
 import retrofit.RetrofitError
 import retrofit.client.Response
 
@@ -27,15 +25,19 @@ class Marvel(val context: Context)
     }
 
     fun getComics() {
+
+//        https://howtodoandroid.com/retrofit-android-example-kotlin/
+//        https://developer.marvel.com/docs#!/public/getComicsCollection_get_6
+
         // Get list of comics
         val options = mutableMapOf<ListComicParamName, String>()
         comicsService.listComic(options, object: retrofit.Callback<DataWrapper<Comic>> {
-            override fun success(t: DataWrapper<Comic>?, response: Response?) {
-                TODO("Not yet implemented")
+            override fun success(data: DataWrapper<Comic>?, response: Response?) {
+                Log.d("Marvel", data.toString())
             }
 
             override fun failure(error: RetrofitError?) {
-                TODO("Not yet implemented")
+                Log.d("Marvel", error!!.message!!)
             }
         })
     }
