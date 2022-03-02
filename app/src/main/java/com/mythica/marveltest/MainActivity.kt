@@ -11,13 +11,22 @@ import com.mythica.marveltest.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity()
 {
-    private lateinit var marvelApi: Marvel
     private lateinit var binding: ActivityMainBinding
+    private lateinit var marvelApi: Marvel
+
+    companion object {
+        lateinit var instance: MainActivity
+    }
+
+    fun getMarvelApi() : Marvel {
+        return marvelApi
+    }
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
 
+        instance = this
         marvelApi = Marvel(this)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
