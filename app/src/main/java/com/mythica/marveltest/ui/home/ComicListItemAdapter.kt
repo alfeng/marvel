@@ -109,13 +109,12 @@ class ComicListItemAdapter constructor(val clickListener: ComicItemClickListener
         viewHolder.description.text = comic.description
 
         // Set cover image
-        val coverFileName = comic.cover.path + comic.cover.extension
-        if (coverFileName.isEmpty()) {
+        if (comic.cover.isEmpty()) {
             viewHolder.cover.visibility = View.GONE
         }
         else {
             viewHolder.cover.visibility = View.VISIBLE
-            MainActivity.instance.getMarvelApi().loadImage(coverFileName, viewHolder.cover!!)
+            MainActivity.instance.getMarvelApi().loadImage(comic.cover, viewHolder.cover!!)
         }
     }
 }

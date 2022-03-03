@@ -6,17 +6,17 @@ import android.widget.ImageView
 
 import com.arnaudpiroelle.marvel.api.MarvelApi
 import com.arnaudpiroelle.marvel.api.objects.Comic
-import com.arnaudpiroelle.marvel.api.objects.Image
 import com.arnaudpiroelle.marvel.api.objects.ref.DataWrapper
 import com.arnaudpiroelle.marvel.api.params.name.comic.ListComicParamName
 import com.arnaudpiroelle.marvel.api.services.async.ComicsAsyncService
 
 import retrofit.RetrofitError
 import retrofit.client.Response
+import com.bumptech.glide.Glide
 
 class Marvel(val context: Context)
 {
-    class ComicInfo(val id: Int, val title: String, val description: String, val cover: Image) {
+    class ComicInfo(val id: Int, val title: String, val description: String, val cover: String) {
     }
 
     interface ComicsCallback {
@@ -54,7 +54,10 @@ class Marvel(val context: Context)
                 comicInfo.clear()
                 val comics = data!!.data!!.results
                 for (comic in comics) {
-                    comicInfo[comic.id] = ComicInfo(comic.id, comic.title, comic.description, comic.thumbnail)
+                    var imageUrl = ""
+                    if (!comic.thumbnail.path.isEmpty())
+                        imageUrl = comic.thumbnail.path + "/portrait_small." + comic.thumbnail.extension
+                    comicInfo[comic.id] = ComicInfo(comic.id, comic.title, comic.description, imageUrl)
                 }
 
                 // Notify subscribers
@@ -67,8 +70,14 @@ class Marvel(val context: Context)
         })
     }
 
-    fun loadImage(filename: String, imgView: ImageView) {
-        // Get comic title, description, cover image
+    fun loadImage(imageUrl: String, imageView: ImageView)
+    {
+
+        if (!imageUrl.isEmpty()) {
+            Glide.with(context.applicationContext)
+                .load(imageUrl)
+                .into(imageView);
+        }
     }
 
     fun subscribeComicEvents(listener: ComicsCallback) {
