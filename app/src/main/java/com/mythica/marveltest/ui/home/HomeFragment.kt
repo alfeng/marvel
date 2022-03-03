@@ -31,12 +31,13 @@ class HomeFragment : Fragment(), ComicListItemAdapter.ComicItemClickListener, Ma
     {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        val comicList = binding.comicList
 
         // Initialize list and adapter
         comicAdapter = ComicListItemAdapter(this)
         binding.comicList.adapter = comicAdapter
-        binding.comicList.layoutManager = LinearLayoutManager(activity)
-        binding.comicList.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+        binding.comicList.layoutManager = LinearLayoutManager(comicList.context)
+        binding.comicList.addItemDecoration(DividerItemDecoration(comicList.context, DividerItemDecoration.VERTICAL))
 
         // Remember current scroll position
         binding.comicList.addOnScrollListener(object : RecyclerView.OnScrollListener() {

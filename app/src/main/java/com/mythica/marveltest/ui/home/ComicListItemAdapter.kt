@@ -92,8 +92,8 @@ class ComicListItemAdapter constructor(val clickListener: ComicItemClickListener
     {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
-        val eventItemView = inflater.inflate(R.layout.comic_list_item, parent, false)
-        return ViewHolder(eventItemView)
+        val comicItemView = inflater.inflate(R.layout.comic_list_item, parent, false)
+        return ViewHolder(comicItemView)
     }
 
     // ---------------------------------------------------------------------------------------
