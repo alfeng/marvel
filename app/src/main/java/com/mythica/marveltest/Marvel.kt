@@ -19,9 +19,19 @@ class Marvel(val context: Context)
     class ComicInfo(val id: Int, val title: String, val description: String, val cover: Image) {
     }
 
+    interface ComicsCallback {
+        fun onComicsRefreshed(comics: MutableMap<Int, ComicInfo>)
+    }
+
     var comicsService: ComicsAsyncService
     private val pubKey = "9f2a244b8e7bbc4c6f5acbd30981c591"
     private val privKey = "d4e531853163b095ffa1e1bd32c6818bfc76d59d"
+
+    // Current list of comics
+    private val comicInfo = mutableMapOf<Int, ComicInfo>()
+
+    // List of subscribers to Comics events
+    private val comicsListeners: MutableSet<ComicsCallback> = mutableSetOf()
 
     init {
         // Init API
@@ -41,11 +51,14 @@ class Marvel(val context: Context)
                 Log.d("Marvel", data.toString())
 
                 // Marshall data to structs
-                val comicInfo = mutableMapOf<Int, ComicInfo>()
+                comicInfo.clear()
                 val comics = data!!.data!!.results
                 for (comic in comics) {
                     comicInfo[comic.id] = ComicInfo(comic.id, comic.title, comic.description, comic.thumbnail)
                 }
+
+                // Notify subscribers
+                onComicsRefreshed()
             }
 
             override fun failure(error: RetrofitError?) {
@@ -58,12 +71,17 @@ class Marvel(val context: Context)
         // Get comic title, description, cover image
     }
 
-    // Create ListView of comic titles, descriptions, and images
-    // Need adapter and RecyclerView
+    fun subscribeComicEvents(listener: ComicsCallback) {
+        comicsListeners += listener
+    }
 
-    // Comic Book ID
-    // Title
-    // Description
-    // Cover image
+    fun unsubscribeComicEvents(listener: ComicsCallback) {
+        comicsListeners -= listener
+    }
 
+    fun onComicsRefreshed() {
+        for (callback in comicsListeners) {
+            callback.onComicsRefreshed(comicInfo)
+        }
+    }
 }

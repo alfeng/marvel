@@ -20,8 +20,8 @@ class ComicListItemAdapter constructor(val clickListener: ComicItemClickListener
 {
     // Use to subscribe to comic item clicks
     interface ComicItemClickListener {
-        fun onComicClicked(eventIndex: Int)
-        fun onComicLongPressed(eventIndex: Int)
+        fun onComicClicked(comicIndex: Int)
+        fun onComicLongPressed(comicIndex: Int)
     }
 
     // List of comics
@@ -37,7 +37,7 @@ class ComicListItemAdapter constructor(val clickListener: ComicItemClickListener
     // ---------------------------------------------------------------------------------------
     //  setList - Set updated list of Comics
     // ---------------------------------------------------------------------------------------
-    fun setList(newList: MutableList<Marvel.ComicInfo>)
+    fun setList(newList: MutableMap<Int, Marvel.ComicInfo>)
     {
         // Remove old list
         val oldSize = comicList.size
@@ -45,7 +45,10 @@ class ComicListItemAdapter constructor(val clickListener: ComicItemClickListener
         notifyItemRangeRemoved(0, oldSize)
 
         // Add new list
-        comicList.addAll(newList)
+        for (item in newList) {
+            comicList.add(item.value)
+        }
+
         notifyItemRangeInserted(0, comicList.size)
     }
 
