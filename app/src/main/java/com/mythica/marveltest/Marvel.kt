@@ -9,10 +9,10 @@ import com.arnaudpiroelle.marvel.api.objects.Comic
 import com.arnaudpiroelle.marvel.api.objects.ref.DataWrapper
 import com.arnaudpiroelle.marvel.api.params.name.comic.ListComicParamName
 import com.arnaudpiroelle.marvel.api.services.async.ComicsAsyncService
+import com.squareup.picasso.Picasso
 
 import retrofit.RetrofitError
 import retrofit.client.Response
-import com.bumptech.glide.Glide
 
 class Marvel(val context: Context)
 {
@@ -76,10 +76,8 @@ class Marvel(val context: Context)
 
     fun loadImage(imageUrl: String, imageView: ImageView)
     {
-
         if (!imageUrl.isEmpty()) {
-            Glide.with(context.applicationContext)
-                .load(imageUrl)
+            Picasso.with(context).load(imageUrl).fit().centerCrop()
                 .into(imageView);
         }
     }
