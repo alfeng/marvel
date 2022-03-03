@@ -43,6 +43,7 @@ class Marvel(val context: Context)
     {
 //        https://howtodoandroid.com/retrofit-android-example-kotlin/
 //        https://developer.marvel.com/docs#!/public/getComicsCollection_get_6
+//        https://developer.marvel.com/documentation/images
 
         // Get list of comics
         val options = mutableMapOf<ListComicParamName, String>()
@@ -55,8 +56,11 @@ class Marvel(val context: Context)
                 val comics = data!!.data!!.results
                 for (comic in comics) {
                     var imageUrl = ""
-                    if (!comic.thumbnail.path.isEmpty())
-                        imageUrl = comic.thumbnail.path + "/portrait_small." + comic.thumbnail.extension
+                    if (!comic.thumbnail.path.isEmpty()) {
+                        Log.e("Marvel", "Thumbnail Path: " + comic.thumbnail.path)
+                        imageUrl = comic.thumbnail.path + "/portrait_medium." + comic.thumbnail.extension
+                        Log.e("Marvel", "Image URL: " + imageUrl)
+                    }
                     comicInfo[comic.id] = ComicInfo(comic.id, comic.title, comic.description, imageUrl)
                 }
 
